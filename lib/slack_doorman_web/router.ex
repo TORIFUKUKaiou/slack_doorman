@@ -21,9 +21,11 @@ defmodule SlackDoormanWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SlackDoormanWeb do
-  #   pipe_through :api
-  # end
+  scope "/slack/events", SlackDoormanWeb do
+    pipe_through :api
+
+    post "/", EventController, :create
+  end
 
   # Enables LiveDashboard only for development
   #
