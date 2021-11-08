@@ -39,6 +39,7 @@ if config_env() == :prod do
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
+  config :slack_doorman, SlackDoormanWeb.Endpoint, server: true
 
   # ## Configuring the mailer
   #
