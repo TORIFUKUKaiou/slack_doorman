@@ -52,7 +52,7 @@ defmodule SlackDoorman.Handler do
     text =
       String.replace(text, "<@#{bot_user_id}>", "")
       |> String.trim()
-      |> Kernel.<>("(to parrot :parrot:)")
+      |> reply()
 
     say(
       channel,
@@ -65,6 +65,10 @@ defmodule SlackDoorman.Handler do
     Logger.info(params)
     IO.inspect(params)
   end
+
+  defp reply("ping"), do: "pong :robot_face:"
+
+  defp reply(text), do: "#{text} (to parrot :parrot:)"
 
   defp say(channel, text) do
     %{
