@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2"
 
 services:
   nginx-proxy:
@@ -7,6 +7,7 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - conf:/etc/nginx/conf.d
       - certs:/etc/nginx/certs
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
@@ -14,12 +15,12 @@ services:
 
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
+    volumes_from:
+      - nginx-proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
       - certs:/etc/nginx/certs
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
     environment:
       - DEFAULT_EMAIL=${EMAIL}
       - NGINX_PROXY_CONTAINER=nginx-proxy
@@ -45,6 +46,7 @@ services:
       - nginx-proxy-acme
 
 volumes:
+  conf:
   certs:
   vhost:
   html:
