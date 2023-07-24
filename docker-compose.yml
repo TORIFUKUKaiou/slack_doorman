@@ -12,6 +12,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: "host"
 
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
@@ -26,6 +27,7 @@ services:
       - NGINX_PROXY_CONTAINER=nginx-proxy
     depends_on:
       - nginx-proxy
+    network_mode: "host"
 
   app:
     image: slack_doorman:latest
@@ -44,6 +46,7 @@ services:
       - 4000:4000
     depends_on:
       - nginx-proxy-acme
+    network_mode: "host"
 
 volumes:
   conf:
