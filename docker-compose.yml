@@ -44,10 +44,6 @@ services:
     depends_on:
       - nginx-proxy-acme
 
-networks:
-  default:
-    external: true
-
 volumes:
   certs:
   vhost:
