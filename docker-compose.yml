@@ -30,6 +30,7 @@ services:
     image: slack_doorman:latest
     build:
       context: .
+      network: host
     environment:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
