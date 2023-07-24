@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 services:
   nginx-proxy:
@@ -8,11 +8,14 @@ services:
       - 443:443
     volumes:
       - conf:/etc/nginx/conf.d
-      - certs:/etc/nginx/certs
+      - certs:/etc/nginx/certs:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    network_mode: "host"
+    environment:
+      DEFAULT_HOST: ${VIRTUAL_HOST}
+      HTTPS_METHOD: noredirect
+    restart: always
 
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
@@ -21,13 +24,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
-      - certs:/etc/nginx/certs
+      - certs:/etc/nginx/certs:rw
     environment:
       - DEFAULT_EMAIL=${EMAIL}
       - NGINX_PROXY_CONTAINER=nginx-proxy
     depends_on:
       - nginx-proxy
-    network_mode: "host"
+    restart: always
 
   app:
     image: slack_doorman:latest
