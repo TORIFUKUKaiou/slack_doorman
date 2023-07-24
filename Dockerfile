@@ -49,7 +49,6 @@ RUN mix release
 # the compiled release and other runtime necessities
 FROM alpine:3.13.6 AS app
 RUN apk add --no-cache libstdc++ openssl ncurses-libs
-RUN echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 
 ARG MIX_ENV
 ENV USER="elixir"
