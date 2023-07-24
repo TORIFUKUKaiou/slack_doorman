@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   app:
@@ -16,7 +16,7 @@ services:
       - LETSENCRYPT_EMAIL=${EMAIL}
     ports:
       - 4000:4000
-    dns: 8.8.8.8
+    dns: "8.8.8.8"
     network_mode: "host"
 
 networks:
