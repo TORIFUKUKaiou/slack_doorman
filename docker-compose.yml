@@ -33,7 +33,7 @@ services:
     build:
       context: .
     environment:
-      - SECRET_KEY_BASE=3IuAYS8yod5/tRAy+GmmAU+blS39HzgNpDbe+s685WWcCFKGDfD72W7bwpZAn31B
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
       - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
       - VIRTUAL_HOST=${VIRTUAL_HOST}

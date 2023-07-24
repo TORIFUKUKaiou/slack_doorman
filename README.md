@@ -9,6 +9,18 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## Run
+
+```
+cp .env.sample .env # edit .env
+docker compose up -d
+```
+
+Set Event Subscriptions > Request URL
+
+ex.
+https://livebook.autoracex.dev:10443/slack/events
+
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
