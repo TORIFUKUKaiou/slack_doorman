@@ -3,10 +3,9 @@ version: "3"
 services:
   nginx-proxy:
     image: nginxproxy/nginx-proxy
-    container_name: nginx-proxy-phx
     ports:
       - 80:80
-      - 10443:443
+      - 443:443
     volumes:
       - certs:/etc/nginx/certs
       - vhost:/etc/nginx/vhost.d
@@ -15,7 +14,6 @@ services:
 
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
-    container_name: nginx-proxy-acme-phx
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
@@ -24,16 +22,16 @@ services:
       - html:/usr/share/nginx/html
     environment:
       - DEFAULT_EMAIL=${EMAIL}
-      - NGINX_PROXY_CONTAINER=nginx-proxy-phx
+      - NGINX_PROXY_CONTAINER=nginx-proxy
     depends_on:
-      - nginx-proxy-phx
+      - nginx-proxy
 
   app:
     image: slack_doorman:latest
     build:
       context: .
     environment:
-      - SECRET_KEY_BASE=3IuAYS8yod5/tRAy+GmmAU+blS39HzgNpDbe+s685WWcCFKGDfD72W7bwpZAn31B
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
       - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
       - VIRTUAL_HOST=${VIRTUAL_HOST}
@@ -43,7 +41,7 @@ services:
     ports:
       - 4000:4000
     depends_on:
-      - nginx-proxy-acme-phx
+      - nginx-proxy-acme
 
 volumes:
   certs:
