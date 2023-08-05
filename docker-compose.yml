@@ -3,6 +3,7 @@ version: "3"
 services:
   nginx-proxy:
     image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
     ports:
       - 80:80
       - 443:443
@@ -14,6 +15,7 @@ services:
 
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
