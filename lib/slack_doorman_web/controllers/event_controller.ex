@@ -12,7 +12,7 @@ defmodule SlackDoormanWeb.EventController do
     if SlackDoorman.Slack.validate_request(conn) do
       conn
       |> put_status(:ok)
-      |> render("challenge.json", challenge: challenge)
+      |> render(:create, challenge: challenge)
     end
   end
 
@@ -28,7 +28,7 @@ defmodule SlackDoormanWeb.EventController do
   defp ok(conn) do
     conn
     |> put_status(:ok)
-    |> render("ok.json", ok: :ok)
+    |> render(:create, ok: :ok)
   end
 
   defp do_something(params) do
