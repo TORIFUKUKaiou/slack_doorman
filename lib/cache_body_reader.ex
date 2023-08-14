@@ -1,4 +1,4 @@
-defmodule SlackDoormanWeb.CacheBodyReader do
+defmodule CacheBodyReader do
   def read_body(conn, opts) do
     {:ok, body, conn} = Plug.Conn.read_body(conn, opts)
     conn = update_in(conn.assigns[:raw_body], &[body | &1 || []])
