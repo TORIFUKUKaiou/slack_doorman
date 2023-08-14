@@ -10,8 +10,12 @@ defmodule SlackDoorman.Application do
     children = [
       # Start the Telemetry supervisor
       SlackDoormanWeb.Telemetry,
+      # Start the Ecto repository
+      SlackDoorman.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: SlackDoorman.PubSub},
+      # Start Finch
+      {Finch, name: SlackDoorman.Finch},
       # Start the Endpoint (http/https)
       SlackDoormanWeb.Endpoint
       # Start a worker by calling: SlackDoorman.Worker.start_link(arg)
