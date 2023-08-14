@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    environment:
+      - DEFAULT_EMAIL=${EMAIL}
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    depends_on:
+      - nginx-proxy
+
+  app:
+    image: slack_doorman:latest
+    build:
+      context: .
+    environment:
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - VIRTUAL_PORT=4000
+      - LETSENCRYPT_HOST=${VIRTUAL_HOST}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+    ports:
+      - 4000:4000
+    depends_on:
+      - nginx-proxy-acme
+
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:

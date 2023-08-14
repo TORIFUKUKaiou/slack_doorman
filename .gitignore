@@ -32,3 +32,4 @@ slack_doorman-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.env
