@@ -120,7 +120,7 @@ defmodule SlackDoorman.Channels do
 
     Repo.insert_all(Channel, entries,
       on_conflict: {:replace, [:name]},
-      conflict_target: [:name],
+      conflict_target: [:slack_id],
       placeholders: %{timestamp: timestamp}
     )
   end
