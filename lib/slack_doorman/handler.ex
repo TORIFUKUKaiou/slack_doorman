@@ -90,7 +90,8 @@ defmodule SlackDoorman.Handler do
         if String.starts_with?(channel_name, "<#") do
           String.slice(channel_name, 2..-3)
         else
-          SlackDoorman.Channels.get_channel_by(channel_name)
+          String.slice(channel_name, 1..-1)
+          |> SlackDoorman.Channels.get_channel_by()
         end
 
       if channel_id do
