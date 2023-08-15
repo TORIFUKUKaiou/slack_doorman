@@ -7,7 +7,8 @@ defmodule SlackDoormanWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_slack_doorman_key",
-    signing_salt: "CVzGzBdO"
+    signing_salt: "CVzGzBdO",
+    same_site: "Lax"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -20,7 +21,7 @@ defmodule SlackDoormanWeb.Endpoint do
     at: "/",
     from: :slack_doorman,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: SlackDoormanWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -28,6 +29,7 @@ defmodule SlackDoormanWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :slack_doorman
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -40,7 +42,7 @@ defmodule SlackDoormanWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    body_reader: {SlackDoormanWeb.CacheBodyReader, :read_body, []},
+    body_reader: {CacheBodyReader, :read_body, []},
     json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride

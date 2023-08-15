@@ -30,6 +30,7 @@ services:
 
   app:
     image: slack_doorman:latest
+    container_name: app
     build:
       context: .
     environment:
@@ -40,8 +41,24 @@ services:
       - VIRTUAL_PORT=4000
       - LETSENCRYPT_HOST=${VIRTUAL_HOST}
       - LETSENCRYPT_EMAIL=${EMAIL}
+      - PHX_SERVER=${PHX_SERVER}
+      - DATABASE_URL=${DATABASE_URL}
+      - PHX_HOST=${PHX_HOST}
     ports:
       - 4000:4000
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: slack_doorman_prod
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/data
     depends_on:
       - nginx-proxy-acme
 
@@ -50,3 +67,4 @@ volumes:
   vhost:
   html:
   acme:
+  dbdata:

@@ -19,19 +19,20 @@ defmodule SlackDoormanWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint SlackDoormanWeb.Endpoint
+
+      use SlackDoormanWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import SlackDoormanWeb.ConnCase
-
-      alias SlackDoormanWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint SlackDoormanWeb.Endpoint
     end
   end
 
-  setup _tags do
+  setup tags do
+    SlackDoorman.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
