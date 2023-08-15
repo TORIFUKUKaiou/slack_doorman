@@ -19,7 +19,7 @@ defmodule SlackDoorman.MixProject do
   def application do
     [
       mod: {SlackDoorman.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :observer, :wx]
     ]
   end
 
