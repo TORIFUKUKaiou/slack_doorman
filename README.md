@@ -24,6 +24,7 @@ cp .env.sample .env
 # edit
 vi .env
 docker compose up -d
+docker compose run --rm -e MIX_ENV=prod app /app/bin/migrate
 ```
 
 ## Run(Local)
