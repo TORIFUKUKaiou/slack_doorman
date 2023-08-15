@@ -13,7 +13,8 @@ defmodule SlackDoorman.Slack.Api do
 
   def conversations_list(cursor) do
     # https://api.slack.com/methods/conversations.list
-    url = "https://slack.com/api/conversations.list?limit=1000&cursor=#{cursor}"
+    url =
+      "https://slack.com/api/conversations.list?limit=1000&cursor=#{cursor}&types=public_channel,private_channel"
 
     headers = [
       "Content-type": "application/json",
