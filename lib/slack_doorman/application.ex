@@ -17,9 +17,10 @@ defmodule SlackDoorman.Application do
       # Start Finch
       {Finch, name: SlackDoorman.Finch},
       # Start the Endpoint (http/https)
-      SlackDoormanWeb.Endpoint
+      SlackDoormanWeb.Endpoint,
       # Start a worker by calling: SlackDoorman.Worker.start_link(arg)
       # {SlackDoorman.Worker, arg}
+      SlackDoorman.Worker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

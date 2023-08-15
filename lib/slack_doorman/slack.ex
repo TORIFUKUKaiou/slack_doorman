@@ -23,6 +23,16 @@ defmodule SlackDoorman.Slack do
     validate_request(timestamp, request_body, slack_signature)
   end
 
+  def update_channels do
+    SlackDoorman.Slack.Api.all_conversations_list()
+    |> SlackDoorman.Channels.insert_all()
+  end
+
+  def update_users do
+    SlackDoorman.Slack.Api.all_users_list()
+    |> SlackDoorman.Users.insert_all()
+  end
+
   defp validate_request(timestamp, request_body, slack_signature) do
     DateTime.diff(DateTime.now!("Etc/UTC"), DateTime.from_unix!(timestamp))
     |> validate_request(timestamp, request_body, slack_signature)
