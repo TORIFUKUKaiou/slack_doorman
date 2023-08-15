@@ -23,6 +23,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 cp .env.sample .env
 # edit
 vi .env
+docker compose build
 docker compose up -d
 docker compose run --rm -e MIX_ENV=prod app /app/bin/migrate
 ```
