@@ -88,10 +88,11 @@ defmodule SlackDoorman.Handler do
     |> Enum.reduce(MapSet.new([channel_id]), fn channel_name, map_set ->
       channel_id =
         if String.starts_with?(channel_name, "<#") do
-          String.slice(channel_name, 2..-3)
+          channel_name |> String.split("|") |> Enum.at(0) |> String.slice(2..-1)
         else
           String.slice(channel_name, 1..-1)
           |> SlackDoorman.Channels.get_channel_by()
+          |> Map.get(:slack_id)
         end
 
       if channel_id do
