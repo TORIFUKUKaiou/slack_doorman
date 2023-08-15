@@ -1,0 +1,3 @@
+#!/bin/sh
+cd -P -- "$(dirname -- "$0")"
+exec ./slack_doorman eval SlackDoorman.Release.migrate
