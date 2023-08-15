@@ -3,8 +3,8 @@ defmodule SlackDoorman.Repo.Migrations.CreateChannels do
 
   def change do
     create table(:channels) do
-      add :name, :string
-      add :slack_id, :string
+      add :name, :string, null: false
+      add :slack_id, :string, null: false
 
       timestamps()
     end
