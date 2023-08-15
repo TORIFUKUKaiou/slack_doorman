@@ -24,10 +24,10 @@ defmodule SlackDoormanWeb.Router do
   # scope "/api", SlackDoormanWeb do
   #   pipe_through :api
   # end
-  scope "/slack/events", SlackDoormanWeb do
+  scope "/api", SlackDoormanWeb do
     pipe_through :api
 
-    post "/", EventController, :create
+    post "/slack/events", EventController, :create
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
