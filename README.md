@@ -25,7 +25,9 @@ cp .env.sample .env
 vi .env
 docker compose build
 docker compose up -d
-docker compose run --rm -e MIX_ENV=prod app /app/bin/migrate
+docker compose exec -it app bin/migrate
+docker compose exec -it app bin/slack_doorman rpc "SlackDoorman.Slack.update_channels()"
+docker compose exec -it app bin/slack_doorman rpc "SlackDoorman.Slack.update_users()"
 ```
 
 ## Run(Local)
